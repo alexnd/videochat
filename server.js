@@ -26,7 +26,7 @@
 
 "use strict";
 
-const PORT = process.env.POST || 6503;
+const PORT = process.env.PORT || 6503;
 // Pathnames of the SSL key and certificate files to use for
 // HTTPS connections.
 const KEY_FILE = process.env.KEY_FILE || './localhost.key';
