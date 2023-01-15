@@ -29,8 +29,8 @@
 const PORT = process.env.POST || 6503;
 // Pathnames of the SSL key and certificate files to use for
 // HTTPS connections.
-const KEY_FILE = process.env.POST || './localhost.key';
-const CRT_FILE = process.env.POST || './localhost.crt';
+const KEY_FILE = process.env.KEY_FILE || './localhost.key';
+const CRT_FILE = process.env.CRT_FILE || './localhost.crt';
 
 var http = require('http');
 var https = require('https');
