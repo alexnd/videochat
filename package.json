@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start":"node server.js",
-    "start-prod":"PORT=7000 KEY_FILE=./host.key CRT_FILE=./host.crt node server.js",
+    "start-prod":"KEY_FILE=./host.key CRT_FILE=./host.crt node server.js",
     "postinstall": "node postinstall.js"
   },
   "keywords": [],

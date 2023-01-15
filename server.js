@@ -26,7 +26,7 @@
 
 "use strict";
 
-const PORT = process.env.PORT || 6503;
+const PORT = process.env.PORT || 7000;
 // Pathnames of the SSL key and certificate files to use for
 // HTTPS connections.
 const KEY_FILE = process.env.KEY_FILE || './localhost.key';
@@ -244,7 +244,7 @@ function handleWebRequest (req, res) {
 // This will be turned into a WebSocket port very shortly.
 
 webServer.listen(PORT, function() {
-  log(`Server is listening on https://localhost/${PORT}`);
+  log(`Server is listening on https://localhost:${PORT}`);
 });
 
 // Create the WebSocket server by converting the HTTPS server into one.

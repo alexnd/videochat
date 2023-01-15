@@ -13,6 +13,7 @@
 
 // Get our hostname
 
+var PORT = window.location.port || 7000;
 var myHostname = window.location.hostname;
 if (!myHostname) {
   myHostname = "localhost";
@@ -84,13 +85,15 @@ function sendToServer(msg) {
 // session.
 function setUsername() {
   myUsername = document.getElementById("name").value;
-
   sendToServer({
     name: myUsername,
     date: Date.now(),
     id: clientID,
     type: "username"
   });
+  if (typeof window.localStorage == 'undefined') {
+    window.localStorage.setItem('username', myUsername);
+  }
 }
 
 // Open and configure the connection to the WebSocket server.
@@ -105,7 +108,7 @@ function connect() {
   if (document.location.protocol === "https:") {
     scheme += "s";
   }
-  serverUrl = scheme + "://" + myHostname + ":6503";
+  serverUrl = scheme + "://" + myHostname + ":" + PORT;
 
   log(`Connecting to server: ${serverUrl}`);
   connection = new WebSocket(serverUrl, "json");
@@ -666,4 +669,12 @@ function handleGetUserMediaError(e) {
 
 function reportError(errMessage) {
   log_error(`Error ${errMessage.name}: ${errMessage.message}`);
+}
+
+window.onload = function() {
+  if (typeof window.localStorage == 'undefined') return;
+  var username = window.localStorage.getItem('username');
+  if (username) {
+    document.getElementById('name').value = username;
+  }
 }
