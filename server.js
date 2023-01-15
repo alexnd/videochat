@@ -231,6 +231,9 @@ function handleWebRequest (req, res) {
   } else if (req.url === '/manifest.json' && req.method === 'GET') {
     res.write(fs.readFileSync('manifest.json'));
     res.end();
+  } else if (req.url === '/favicon.ico' && req.method === 'GET') {
+    res.write(fs.readFileSync('favicon.ico'));
+    res.end();
   } else {
       res.writeHead(404, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Route not found' }));
