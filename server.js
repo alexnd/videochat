@@ -26,18 +26,16 @@
 
 "use strict";
 
-const PORT = 6503;
+const PORT = process.env.POST || 6503;
+// Pathnames of the SSL key and certificate files to use for
+// HTTPS connections.
+const KEY_FILE = process.env.POST || './localhost.key';
+const CRT_FILE = process.env.POST || './localhost.crt';
 
 var http = require('http');
 var https = require('https');
 var fs = require('fs');
 var WebSocketServer = require('websocket').server;
-
-// Pathnames of the SSL key and certificate files to use for
-// HTTPS connections.
-
-const keyFilePath = './localhost.key';
-const certFilePath = './localhost.crt';
 
 // Used for managing the text chat user list.
 
@@ -151,9 +149,9 @@ var httpsOptions = {
 };
 
 try {
-  httpsOptions.key = fs.readFileSync(keyFilePath);
+  httpsOptions.key = fs.readFileSync(KEY_FILE);
   try {
-    httpsOptions.cert = fs.readFileSync(certFilePath);
+    httpsOptions.cert = fs.readFileSync(CRT_FILE);
   } catch(err) {
     httpsOptions.key = null;
     httpsOptions.cert = null;
