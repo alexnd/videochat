@@ -26,6 +26,8 @@
 
 "use strict";
 
+const PORT = 6503;
+
 var http = require('http');
 var https = require('https');
 var fs = require('fs');
@@ -189,12 +191,6 @@ if (!webServer) {
 // requests are handled by the main server on the box. If you
 // want to, you can return real HTML here and serve Web content.
 
-/*function handleWebRequest(request, response) {
-  log ("Received request for " + request.url);
-  response.writeHead(404);
-  response.end();
-}*/
-
 function handleWebRequest (req, res) {
   log ("URL: " + req.url || '');
   if (req.method === 'OPTIONS') {
@@ -234,9 +230,6 @@ function handleWebRequest (req, res) {
   } else if (req.url === '/chat.css' && req.method === 'GET') {
     res.write(fs.readFileSync('chat.css'));
     res.end();
-  } else if (req.url === '/shared.css' && req.method === 'GET') {
-    res.write(fs.readFileSync('shared.css'));
-    res.end();
   } else if (req.url === '/manifest.json' && req.method === 'GET') {
     res.write(fs.readFileSync('manifest.json'));
     res.end();
@@ -244,15 +237,13 @@ function handleWebRequest (req, res) {
       res.writeHead(404, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ message: 'Route not found' }));
   }
-
-  log("Server is listening on port 6503");
 }
 
 // Spin up the HTTPS server on the port assigned to this sample.
 // This will be turned into a WebSocket port very shortly.
 
-webServer.listen(6503, function() {
-  log("Server is listening on port 6503");
+webServer.listen(PORT, function() {
+  log(`Server is listening on https://localhost/${PORT}`);
 });
 
 // Create the WebSocket server by converting the HTTPS server into one.
