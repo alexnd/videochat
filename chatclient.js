@@ -91,7 +91,7 @@ function setUsername() {
     id: clientID,
     type: "username"
   });
-  if (typeof window.localStorage == 'undefined') {
+  if (typeof window.localStorage != 'undefined') {
     window.localStorage.setItem('username', myUsername);
   }
 }
