@@ -31,11 +31,14 @@ const PORT = process.env.PORT || 7000;
 // HTTPS connections.
 const KEY_FILE = process.env.KEY_FILE || './localhost.key';
 const CRT_FILE = process.env.CRT_FILE || './localhost.crt';
+var ADDR_LAN = '127.0.0.1';
 
-var http = require('http');
-var https = require('https');
-var fs = require('fs');
-var WebSocketServer = require('websocket').server;
+const os = require('os');
+const dns = require('dns');
+const fs = require('fs');
+const http = require('http');
+const https = require('https');
+const WebSocketServer = require('websocket').server;
 
 // Used for managing the text chat user list.
 
@@ -240,13 +243,6 @@ function handleWebRequest (req, res) {
   }
 }
 
-// Spin up the HTTPS server on the port assigned to this sample.
-// This will be turned into a WebSocket port very shortly.
-
-webServer.listen(PORT, function() {
-  log(`Server is listening on https://localhost:${PORT}`);
-});
-
 // Create the WebSocket server by converting the HTTPS server into one.
 
 var wsServer = new WebSocketServer({
@@ -399,3 +395,17 @@ wsServer.on('request', function(request) {
     log(logMessage);
   });
 });
+
+// Determine my IP
+dns.lookup(os.hostname(), function (err, addr, fam) {
+  ADDR_LAN = addr;
+  init();
+});
+
+function init() {
+  // Spin up the HTTPS server on the port assigned to this sample.
+  // This will be turned into a WebSocket port very shortly.
+  webServer.listen(PORT, function() {
+    log(`Server is listening on https://${ADDR_LAN}:${PORT}`);
+  });
+}
