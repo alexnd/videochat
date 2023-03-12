@@ -228,6 +228,9 @@ function handleWebRequest (req, res) {
   } else if (req.url === '/chatclient.js' && req.method === 'GET') {
     res.write(fs.readFileSync('chatclient.js'));
     res.end();
+  } else if (req.url === '/adapter.js' && req.method === 'GET') {
+    res.write(fs.readFileSync('adapter.js'));
+    res.end();
   } else if (req.url === '/chat.css' && req.method === 'GET') {
     res.write(fs.readFileSync('chat.css'));
     res.end();
@@ -238,8 +241,8 @@ function handleWebRequest (req, res) {
     res.write(fs.readFileSync('favicon.ico'));
     res.end();
   } else {
-      res.writeHead(404, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
-      res.end(JSON.stringify({ message: 'Route not found' }));
+    res.writeHead(404, { 'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json' });
+    res.end(JSON.stringify({ message: 'Route not found' }));
   }
 }
 
